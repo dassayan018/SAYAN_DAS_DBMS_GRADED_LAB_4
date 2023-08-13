@@ -1,0 +1,30 @@
+SELECT 
+  T2.ORD_ID, 
+  T2.ORD_AMOUNT, 
+  T2.ORD_DATE, 
+  T2.CUS_ID, 
+  T2.PRO_NAME, 
+  C.CUS_NAME 
+FROM 
+  CUSTOMER C 
+  INNER JOIN (
+    SELECT 
+      O.ORD_ID, 
+      O.ORD_AMOUNT, 
+      O.ORD_DATE, 
+      O.CUS_ID, 
+      T1.PRO_NAME 
+    FROM 
+      `ORDER` O 
+      INNER JOIN (
+        SELECT 
+          P.PRO_NAME, 
+          P.PRO_ID, 
+          SP.PRICING_ID 
+        FROM 
+          PRODUCT P 
+          INNER JOIN SUPPLIER_PRICING SP ON P.PRO_ID = SP.PRO_ID
+      ) AS T1 ON T1.PRICING_ID = O.PRICING_ID
+  ) AS T2 ON T2.CUS_ID = C.CUS_ID 
+WHERE 
+  C.CUS_ID = 2;

@@ -1,0 +1,10 @@
+select 
+  C.CUS_GENDER AS GENDER, 
+  COUNT(*) AS TOTAL_CUSTOMERS 
+from 
+  customer c 
+  inner join `order` o on c.cus_id = o.cus_id 
+where 
+  ord_amount >= 3000 
+GROUP BY 
+  C.CUS_GENDER;
